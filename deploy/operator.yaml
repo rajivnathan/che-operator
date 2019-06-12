@@ -25,13 +25,13 @@ spec:
       serviceAccountName: che-operator
       containers:
         - name: che-operator
-          image: eivantsov/operator
+          image: jeevandroid/che-operator:latest
           ports:
           - containerPort: 60000
             name: metrics
           command:
           - che-operator
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           readinessProbe:
             exec:
               command:

@@ -14,15 +14,17 @@
 
 BASE_DIR=$(cd "$(dirname "$0")"; pwd)
 
-docker build -t che/operator .
-kubectl apply -f ${BASE_DIR}/deploy/service_account.yaml -n=$1
-kubectl apply -f ${BASE_DIR}/deploy/role.yaml -n=$1
-kubectl apply -f ${BASE_DIR}/deploy/role_binding.yaml -n=$1
-kubectl apply -f ${BASE_DIR}/deploy/crds/org_v1_che_crd.yaml -n=$1
+# docker build -t che/operator .
+# docker tag che/operator jeevandroid/che-operator:latest
+# docker push jeevandroid/che-operator:latest
+kubectl apply -f ${BASE_DIR}/deploy/service_account.yaml
+kubectl apply -f ${BASE_DIR}/deploy/role.yaml
+kubectl apply -f ${BASE_DIR}/deploy/role_binding.yaml
+kubectl apply -f ${BASE_DIR}/deploy/crds/org_v1_che_crd.yaml
 # sometimes the operator cannot get CRD right away
 sleep 2
 # uncomment when on OpenShift if you need login with OpenShift in Che
 #oc new-app -f ${BASE_DIR}/deploy/role_binding_oauth.yaml -p NAMESPACE=$1 -n=$1
 #oc apply -f ${BASE_DIR}/deploy/cluster_role.yaml -n=$1
-kubectl apply -f ${BASE_DIR}/deploy/operator-local.yaml -n=$1
-kubectl apply -f ${BASE_DIR}/deploy/crds/org_v1_che_cr.yaml -n=$1
+kubectl apply -f ${BASE_DIR}/deploy/operator.yaml
+kubectl apply -f ${BASE_DIR}/deploy/crds/org_v1_che_cr.yaml

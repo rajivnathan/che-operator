@@ -12,7 +12,6 @@
 package deploy
 
 import (
-	"strconv"
 	orgv1 "github.com/eclipse/che-operator/pkg/apis/org/v1"
 	"github.com/eclipse/che-operator/pkg/util"
 	appsv1 "k8s.io/api/apps/v1"
@@ -20,6 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
+	"strconv"
 )
 
 func NewCheDeployment(cr *orgv1.CheCluster, cheImage string, cheTag string, cmRevision string, isOpenshift bool) (*appsv1.Deployment, error) {
@@ -52,7 +52,7 @@ func NewCheDeployment(cr *orgv1.CheCluster, cheImage string, cheTag string, cmRe
 					Containers: []corev1.Container{
 						{
 							Name:            cheFlavor,
-							ImagePullPolicy: corev1.PullIfNotPresent,
+							ImagePullPolicy: corev1.PullAlways,
 							Image:           cheImage + ":" + cheTag,
 							Ports: []corev1.ContainerPort{
 								{
@@ -118,13 +118,13 @@ func NewCheDeployment(cr *orgv1.CheCluster, cheImage string, cheTag string, cmRe
 								{
 									ConfigMapRef: &corev1.ConfigMapEnvSource{
 										LocalObjectReference: corev1.LocalObjectReference{Name: "custom"},
-										Optional: &optionalEnv,
+										Optional:             &optionalEnv,
 									},
 								},
 							},
 							Env: []corev1.EnvVar{
 								{
-									Name: "CM_REVISION",
+									Name:  "CM_REVISION",
 									Value: cmRevision,
 								},
 								{
@@ -151,18 +151,18 @@ func NewCheDeployment(cr *orgv1.CheCluster, cheImage string, cheTag string, cmRe
 			},
 		},
 	}
-	if ! isOpenshift {
-		runAsUser, err := strconv.ParseInt(util.GetValue(cr.Spec.K8SOnly.SecurityContextRunAsUser, DefaultSecurityContextRunAsUser), 10, 64) 
+	if !isOpenshift {
+		runAsUser, err := strconv.ParseInt(util.GetValue(cr.Spec.K8SOnly.SecurityContextRunAsUser, DefaultSecurityContextRunAsUser), 10, 64)
 		if err != nil {
 			return nil, err
 		}
-		fsGroup, err := strconv.ParseInt(util.GetValue(cr.Spec.K8SOnly.SecurityContextFsGroup, DefaultSecurityContextFsGroup), 10, 64) 
+		fsGroup, err := strconv.ParseInt(util.GetValue(cr.Spec.K8SOnly.SecurityContextFsGroup, DefaultSecurityContextFsGroup), 10, 64)
 		if err != nil {
 			return nil, err
 		}
-		cheDeployment.Spec.Template.Spec.SecurityContext = &corev1.PodSecurityContext {
+		cheDeployment.Spec.Template.Spec.SecurityContext = &corev1.PodSecurityContext{
 			RunAsUser: &runAsUser,
-			FSGroup: &fsGroup,
+			FSGroup:   &fsGroup,
 		}
 	}
 

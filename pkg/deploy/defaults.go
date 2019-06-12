@@ -31,8 +31,8 @@ const (
 	DefaultKeycloakAdminUserName     = "admin"
 	DefaultCheLogLevel               = "INFO"
 	DefaultCheDebug                  = "false"
-	DefaultPvcJobsImage              = "registry.redhat.io/ubi8-minimal:8.0-127"
-	DefaultPostgresImage             = "registry.redhat.io/rhscl/postgresql-96-rhel7:1-40"
+	DefaultPvcJobsImage              = "registry.access.redhat.com/ubi8-minimal:8.0-127"
+	DefaultPostgresImage             = "registry.access.redhat.com/rhscl/postgresql-96-rhel7:1-40"
 	DefaultPostgresUpstreamImage     = "centos/postgresql-96-centos7:9.6"
 	DefaultKeycloakImage             = "registry.redhat.io/redhat-sso-7/sso73-openshift:1.0-11"
 	DefaultKeycloakUpstreamImage     = "eclipse/che-keycloak:7.0.0-beta-5.0"
@@ -44,8 +44,8 @@ const (
 		"-XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 " +
 		"-Dsun.zip.disableMemoryMapping=true " +
 		"-Xms20m -Djava.security.egd=file:/dev/./urandom"
-	DefaultServerMemoryRequest = "512Mi"
-	DefaultServerMemoryLimit   = "1Gi"
-	DefaultSecurityContextFsGroup    = "1724"
-	DefaultSecurityContextRunAsUser  = "1724"
+	DefaultServerMemoryRequest      = "512Mi"
+	DefaultServerMemoryLimit        = "1Gi"
+	DefaultSecurityContextFsGroup   = "1724"
+	DefaultSecurityContextRunAsUser = "1724"
 )

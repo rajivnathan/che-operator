@@ -17,15 +17,15 @@ metadata:
 spec:
   server:
     # server image used in Che deployment
-    cheImage: ''
+    cheImage: 'eclipse/che-server@sha256'
     # tag of an image used in Che deployment
-    cheImageTag: ''
+    cheImageTag: '3af3cb67ceb74e367a822f42fd013aba0553e4d3be33bc3851f742db5b60b7b4'
     # defaults to `che`. When set to `codeready`, CodeReady Workspaces is deployed
     # the difference is in images, labels, exec commands
     cheFlavor: ''
     # specifies a custom cluster role to user for the Che workspaces
     # Uses the default roles if left blank.
-    cheWorkspaceClusterRole: ''
+    cheWorkspaceClusterRole: 'eclipse-codewind'
     # when set to true the operator will attempt to get a secret in OpenShift router namespace
     # to add it to Java trust store of Che server. Requires cluster-admin privileges for operator service account
     selfSignedCert:
@@ -105,7 +105,7 @@ spec:
     identityProviderImage: ''
   k8s:
     # your global ingress domain
-    ingressDomain: '192.168.99.101.nip.io'
+    ingressDomain: '9.42.19.190.nip.io'
     # kubernetes.io/ingress.class, defaults to nginx
     ingressClass: ''
     # IngressStrategy is the way ingresses are created.
